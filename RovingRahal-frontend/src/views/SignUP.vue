@@ -5,8 +5,8 @@
     </div>
 </template>
 <script>
-import SignIn from '../../components/sign/SignIn.vue';
-import SignUp from '../../components/sign/SignUp.vue';
+import SignIn from '../components/sign/SignIn.vue';
+import SignUp from '../components/sign/SignUp.vue';
 export default {
     components:{
         SignIn,
