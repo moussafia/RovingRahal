@@ -27,3 +27,11 @@ Route::group([
     Route::post('me', [AuthController::class, 'me']);
     Route::post('register', [AuthController::class, 'register']);
 });
+
+Route::group([
+    'middleware' => 'api',
+    'prefix' =>'password'
+],function(){
+    Route::post('reset-password',[AuthController::class , 'resetPassword']);
+    Route::post('reset',[AuthController::class , 'reset']);
+});
