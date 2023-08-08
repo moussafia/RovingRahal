@@ -79,7 +79,7 @@ export default {
     methods:{
         emojisToggle(){
             console.log('object');
-           $('.emojis-container').toggleClass('open');
+            $('.emojis-container').toggleClass('open');
         },
         categoryChoosed(index){
             this.category_to_display = this.emojis[index];
