@@ -5,6 +5,7 @@
 	--dark-color: #2c2c2e;
 	--brand-color: #ea3c3c;
 	--text-color: #fff; 
+	--icons-text: #71767B;
 }
 :root{
 	--background-color: #ffffff;
@@ -28,6 +29,9 @@ body{
 }
 .text{
 	color: var(--text-color);
+}
+.icons-text{
+    color: var(--icons-text);
 }
 .brand-background{
 	background-color: var(--brand-color);
