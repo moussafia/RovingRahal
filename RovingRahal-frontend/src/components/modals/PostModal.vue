@@ -120,4 +120,5 @@ button.privacyBtn{
     overflow-y: scroll;
     flex-wrap: wrap;
 }
+
 </style>
