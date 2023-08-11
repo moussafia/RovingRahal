@@ -2,7 +2,7 @@
 
 .dark {
 	--background-color: #000;
-	--dark-color: #2c2c2e;
+	--dark-color: #202327;
 	--brand-color: #ea3c3c;
 	--text-color: #fff; 
 	--icons-text: #71767B;
@@ -43,4 +43,6 @@ input:focus,
 textarea:focus {
   outline: none !important;
   box-shadow: none !important;
+  stroke: none !important;
 }
+a{cursor: pointer;}
