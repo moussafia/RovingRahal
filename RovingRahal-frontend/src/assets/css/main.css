@@ -2,7 +2,7 @@
 
 .dark {
 	--background-color: #000;
-	--dark-color: #2c2c2e;
+	--dark-color: #202327;
 	--brand-color: #ea3c3c;
 	--text-color: #fff;
 	--icons-text: #71767B;
@@ -48,11 +48,15 @@ body {
 
 input:focus,
 textarea:focus {
-	outline: none !important;
-	box-shadow: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+  stroke: none !important;
 }
 
-/* B saad */
+a{
+  cursor: pointer;
+}
+
 .icons-text {
 	color: var(--icons-text);
 }
@@ -69,4 +73,4 @@ textarea:focus {
 .links-dropdown:active{
 	background-color: var(--dark-color);
 }
-/* E saad */
+
