@@ -5,6 +5,7 @@
             <div class="relative bg-white sign-container flex flex-col">
                 <h1 v-if="sign == 'in'" class="font-medium text-3xl">Log In</h1>
                 <h1 v-if="sign == 'up'" class="font-medium text-3xl">Sign Up</h1>
+                <h1 v-if="sign == 'fp'" class="font-medium text-3xl">Forget Password</h1>
                 <p class="text-xs mt-2 text-justify mb-8">By continuing, you are setting up a Web Name
                     account and agree to our <a class="text-sky-500">User Agreement</a> and
                     <a class="text-sky-500">Privacy Policy</a>.
@@ -21,21 +22,61 @@
                 </button>
                 <hr class="my-5">
                 <p class="or">OR</p>
-
-                <form action="" class="mt-4">
-                    <input v-if="sign == 'in'" class="rounded-full w-full border-0 px-6 py-3 mb-4" type="text" placeholder="Username">
-                    <input v-if="sign == 'in'" class="rounded-full w-full border-0 px-6 py-3" type="password" placeholder="Password">
-                    <input v-if="sign == 'up'" class="rounded-full w-full border-0 px-6 py-3 mb-4" type="Email" placeholder="Email">
-                    <p v-if="sign == 'in'" class="text-xs text-justify my-4">Forget your <a class="text-sky-500">Username</a> or
-                        <a class="text-sky-500">Password</a>.
-                    </p>
-                    <button v-if="sign == 'in'" class="text-center rounded-full w-full border-0 px-6 py-3 mb-4 brand-background text-white font-bold">
-                        Log In
-                    </button>
-                    <button v-if="sign == 'up'" class="text-center rounded-full w-full border-0 px-6 py-3 mb-4 brand-background text-white font-bold">
+                 <!-- Registration Form -->
+                <form v-if="sign === 'up'" @submit.prevent="register" class="mt-4">
+                    <input v-model="registrationForm.name" class="rounded-full w-full border-0 px-6 py-3 mb-4" type="text" placeholder="Username">
+                    <input v-model="registrationForm.email" class="rounded-full w-full border-0 px-6 py-3 mb-4" type="email" placeholder="Email">
+                    <input v-model="registrationForm.password" class="rounded-full w-full border-0 px-6 py-3 mb-4" type="password" placeholder="Password">
+                    <input v-model="registrationForm.password_confirmation" class="rounded-full w-full border-0 px-6 py-3 mb-4" type="password" placeholder="Confirm Your Password">
+                    <button class="text-center rounded-full w-full border-0 px-6 py-3 mb-4 brand-background text-white font-bold">
                         Sign Up
                     </button>
                 </form>
+
+                <!-- Login Form -->
+                <form v-else-if="sign === 'in'" @submit.prevent="login" class="mt-4">
+                    <input v-model="registrationForm.email" class="rounded-full w-full border-0 px-6 py-3 mb-4" type="email" placeholder="Email">
+                    <input v-model="registrationForm.password" class="rounded-full w-full border-0 px-6 py-3" type="password" placeholder="Password">
+                    <p  class="text-xs text-justify my-4">Forget your <a class="text-sky-500" @click="sign = 'fp'">Password</a>?
+                    </p>
+                    <button class="text-center rounded-full w-full border-0 px-6 py-3 mb-4 brand-background text-white font-bold">
+                        Log In
+                    </button>
+                </form>
+
+                <!-- Password Reset Form -->
+                <form v-else-if="sign === 'fp'" @submit.prevent="resetPassword" class="mt-4">
+                    <input v-model="registrationForm.email" class="rounded-full w-full border-0 px-6 py-3 mb-4" type="email" placeholder="Email">
+                    <button class="text-center rounded-full w-full border-0 px-6 py-3 mb-4 brand-background text-white font-bold">
+                        Reset Password
+                    </button>
+                </form>
+                <!-- <form v-if="sign == 'up'" action="" class="mt-4">
+                    <input  class="rounded-full w-full border-0 px-6 py-3 mb-4" type="text" placeholder="Username">
+                    <input  class="rounded-full w-full border-0 px-6 py-3 mb-4" type="Email" placeholder="Email">
+                    <input  class="rounded-full w-full border-0 px-6 py-3 mb-4" type="password" placeholder="Password">
+                    <input  class="rounded-full w-full border-0 px-6 py-3 mb-4" type="password" placeholder="Confirm Your Password">
+                    <button class="text-center rounded-full w-full border-0 px-6 py-3 mb-4 brand-background text-white font-bold">
+                        Sign Up
+                    </button>
+                </form>
+                <form v-else-if="sign == 'in'" action="" class="mt-4">
+                    <input class="rounded-full w-full border-0 px-6 py-3 mb-4" type="email" placeholder="Email">
+                    <input  class="rounded-full w-full border-0 px-6 py-3" type="password" placeholder="Password">
+                    <p  class="text-xs text-justify my-4">Forget your <a class="text-sky-500" @click="sign = 'fp'">Password</a>?
+                    </p>
+                    <button class="text-center rounded-full w-full border-0 px-6 py-3 mb-4 brand-background text-white font-bold">
+                        Log In
+                    </button>
+                </form>
+                <form v-else-if="sign == 'fp'" action="" class="mt-4">
+                    <input class="rounded-full w-full border-0 px-6 py-3 mb-4" type="email" placeholder="Email">
+                    <button class="text-center rounded-full w-full border-0 px-6 py-3 mb-4 brand-background text-white font-bold">
+                        Reset Password
+                    </button>
+                </form> -->
+                <p v-if="sign == 'fp'" class="text-xs text-justify mt-2">I Remember My Password <a class="text-sky-500" @click="sign = 'in'">Log In</a>
+                </p>
                 <p v-if="sign == 'in'" class="text-xs text-justify mt-2">New to Web Name ? <a class="text-sky-500" @click="sign = 'up'">Sign up</a>
                 </p>
                 <p v-if="sign == 'up'" class="text-xs text-justify mt-2">Alreay a web name ? <a class="text-sky-500" @click="sign = 'in'">Log In</a> 
@@ -48,10 +89,31 @@
     </div>
 </template>
 <script>
+import { mapActions } from "vuex";
+     
 export default {
     data(){
         return {
-            sign:'in'
+            sign:'in',
+            registrationForm: {
+                name: '',
+                email: '',
+                password: '',
+                password_confirmation: ''
+            }
+        }
+    },
+    methods:{
+        ...mapActions("users", ["registerUser","loginUser","resetPasswordRequest"]),
+        async register() {
+                console.log(this.registrationForm);
+                await this.registerUser(this.registrationForm);
+        },
+        async login() {
+            await this.loginUser(this.registrationForm);
+        },
+        async resetPassword() {
+            await this.resetPasswordRequest(this.registrationForm);
         }
     }
 }

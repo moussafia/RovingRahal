@@ -21,6 +21,10 @@
 	width: 100%;
 	max-width: 1400px;
 	margin: auto;
+	height: 100vh;
+	display: flex;
+
+	flex-direction: column;
 }
 
 * {
@@ -72,5 +76,8 @@ a{
 
 .links-dropdown:active{
 	background-color: var(--dark-color);
+}
+.brand-shadow{
+	box-shadow: 0 0 20px #ea3c3c86;
 }
 

@@ -33,10 +33,11 @@ class AuthController extends Controller
 
         $user = User::create($credentials);
 
-        return response()->json([
-            'message' => 'User registered successfully',
-            'user' => $user,
-        ], 201);
+        return $this->login();
+        // return response()->json([
+        //     'message' => 'User registered successfully',
+        //     'user' => $user,
+        // ], 201);
     }
 
     /**
