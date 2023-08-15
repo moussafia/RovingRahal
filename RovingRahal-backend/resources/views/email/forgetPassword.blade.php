@@ -54,7 +54,7 @@ You can reset password from bellow link:
                                             password has been generated for you. To reset your password, click the
                                             following link and follow the instructions.
                                         </p>
-                                        <a href="http://localhost:8000/reset-password?token={{ $credentials['token'] }}&email={{ $credentials['email'] }}"
+                                        <a href="http://localhost:5173/reset-password?token={{ $credentials['token'] }}&email={{ $credentials['email'] }}"
                                             style="background:#ff8b10;text-decoration:none !important; font-weight:500; margin-top:35px; color:#fff;text-transform:uppercase; font-size:14px;padding:10px 24px;display:inline-block;border-radius:50px;">Reset
                                             Password</a>
                                     </td>
