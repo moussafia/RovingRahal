@@ -31,7 +31,7 @@ export default {
     width: 45%;
     position: relative;
 }
-.search-container >svg{
+.search-container > svg{
     position: absolute;
     width: 24px;
     height: 24px;
