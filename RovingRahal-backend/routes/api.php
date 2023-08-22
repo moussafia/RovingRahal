@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\Blog\BlogController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -24,7 +25,7 @@ Route::group([
     Route::post('login', [AuthController::class, 'login']);
     Route::post('logout', [AuthController::class, 'logout']);
     Route::post('refresh', [AuthController::class, 'refresh']);
-    Route::post('me', [AuthController::class, 'me']);
+    Route::get('me', [AuthController::class, 'me']);
     Route::post('register', [AuthController::class, 'register']);
 });
 
@@ -34,4 +35,10 @@ Route::group([
 ],function(){
     Route::post('reset-password',[AuthController::class , 'resetPassword']);
     Route::post('reset',[AuthController::class , 'reset']);
+});
+Route::group([
+    'middleware'=>'api',
+    'prefix'=>'Blog'
+],function(){
+    Route::post('createPost',[BlogController::class,'create']);
 });
