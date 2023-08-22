@@ -24,10 +24,10 @@
                             <div class="flex justify-between">
                                 <div class="post-head icons-text flex gap-3">
                                     <a href="#" class="font-extrabold text">
-                                        Pew Pew
+                                        <h3>Pew Pew</h3>
                                     </a>
                                     <a href="#">
-                                        @PewPew
+                                        <p>@PewPew</p>
                                     </a>|
                                     <p class="flex items-center text-sm">
                                         18h
@@ -172,7 +172,10 @@
                         </div>
                     </div>
                 </div>
-                <div class="hidden" id="Folowing" aria-labelledby="dashboard-tab">
+                <div class="hidden" id="Folowing" aria-labelledby="folowing-tab">
+                    <div class="vide">
+                        <h1>Dont have any following!</h1>
+                    </div>
                 </div>
             </div>
 
@@ -201,13 +204,19 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 main {
     height: 100vh;
     width: 630px;
     /* 630 370 */
     /* padding-top: 100px; */
     border-right: 1px solid var(--dark-color);
+}
+
+.vide{
+    color: var(--text-color);
+    text-align: center;
+    padding-top: 60px;
 }
 
 .tab-posts{
