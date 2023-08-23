@@ -118,7 +118,7 @@
                         placeholder="What's in your mind, Pew Pew?" rows="8"></textarea>
                         <div class="card-image absolute right-7"
                         style="direction: rtl;bottom: -47px;">
-                                <div class="img relative" v-for="(picture,index) in selectedImages" :key="index">
+                                <div class="img relative" v-for="(picture,index) in imageUploaded" :key="index">
                                     <svg @click="removeImage(index)" viewBox="0 0 24 24" fill="none"
                                         xmlns="http://www.w3.org/2000/svg" class="absolute right-2 top-2">
                                         <path
@@ -163,7 +163,8 @@
                             </svg>
                         </div>
                     </div>
-                    <button class="text-white ml-12 px-12 text-lg py-2 brand-background font-bold rounded-full">
+                    <button class="text-white ml-12 px-12 text-lg py-2 brand-background font-bold rounded-full"
+                    data-modal-hide="postModal">
                         Post
                     </button>
                 </div>
@@ -238,7 +239,8 @@
                         </div>
                     </div>
                     <!--video section-->
-                    <div class="absolute bottom-2" :class="cameraActive ?'block' : 'hidden'" style="width: 64%;">
+                    <div class="absolute bottom-2" :class="cameraActive ?'block' : 'hidden'" style="width: 64%;"
+                    ref="DivSectionVideo">
                         <video ref="captureCamera" class="w-full" @loadedmetadata="handleVideoLoaded" autoplay>
                         </video>
                         <button type="button" @click="closeCamera"
@@ -291,7 +293,8 @@
                 <!-- Modal footer -->
                 <div class="flex items-center p-6 space-x-2 border-t border-gray-200 rounded-b dark:border-gray-600">
                     <button data-modal-hide="pictureModal" type="button"
-                        class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Upload</button>
+                        class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                        @click="uploadImage">Upload</button>
                     <button data-modal-hide="pictureModal" type="button"
                         class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600">cancel</button>
                 </div>
@@ -310,6 +313,7 @@ export default {
             displayDiv: 'none',
             selectedRadio: 'public',
             selectedImages: [],
+            imageUploaded:[],
             uploadVisible: false,
             cameraActive: false,
             photoTaken: false,
@@ -366,6 +370,19 @@ export default {
         removeImage(index) {
             const removedImageURL = this.selectedImages.splice(index, 1)[0];
             URL.revokeObjectURL(removedImageURL);
+            if(this.imageUploaded.length>0){
+                const removedImageURL = this.imageUploaded.splice(index, 1)[0];
+                URL.revokeObjectURL(removedImageURL);
+            }
+        },
+        uploadImage(){
+            for(const imgUrl of this.selectedImages){
+                console.log(imgUrl);
+                if(!this.imageUploaded.includes(imgUrl)){
+                this.imageUploaded.push(imgUrl)
+            }
+            }
+            console.log(this.imageUploaded);
         },
         async startCamera() {
             this.takePhotoIsOpen = true
@@ -406,12 +423,22 @@ export default {
             tracks.forEach(track => track.stop());
             video.srcObject = null;
             this.cameraActive = false
+        },
+        onClickOutVideo(referenceDiv, event){     
+            const targetElement = event.target;
+            const divElement = this.$refs[referenceDiv];
+            if (divElement &&
+                !divElement.contains(targetElement)) {
+                this.cameraActive = false;
+                this.closeCamera()
+            }
         }
     },
 
     mounted() {
         this.category_to_display = this.emojis[0];
         document.addEventListener('click', this.onClickOutside.bind(this, 'choseVisibility')),
+        document.addEventListener('click', this.onClickOutVideo.bind(this, 'DivSectionVideo')),
             this.stopPropagationTarget('btnShowVisibility')
     }
 };
