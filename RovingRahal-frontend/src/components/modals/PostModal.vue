@@ -249,7 +249,7 @@
                 </button>
             </div>
             <!-- Modal body -->
-            <div class="p-6 space-y-6 text-center flex flex-col items-center justify-center" style="height: 335px;">
+            <div class="relative p-6 space-y-6 text-center flex flex-col items-center justify-center" style="height: 335px;">
               <h1 class="text-white text-center text-xl">Important!</h1>
               <span class="text-white text-center text-sm text-center">
                 You can upload a maximum of 4 pictures.
@@ -276,20 +276,14 @@
               <input type="file" class="hidden" ref="imgInput" accept="image/*"
               @change="handleFileUpload" multiple>
               </button>
-              <button v-show="uploadVisible" @click="openCamera"
+              <button v-show="uploadVisible" @click="startCamera"
               class="text-white bg-blue-500 gap-2 flex justify-center items-center p-2 px-6 rounded-full
-              text-bold">
+              text-bold cursor-pointer" >
                 Take pictures
                 <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path d="M7 6V20M19 6C19 5.06812 19 4.60218 18.8478 4.23463C18.6448 3.74458 18.2554 3.35523 17.7654 3.15224C17.3978 3 16.9319 3 16 3C15.0681 3 14.6022 3 14.2346 3.15224C13.7446 3.35523 13.3552 3.74458 13.1522 4.23463C13 4.60218 13 5.06812 13 6M17 13C17 14.6569 15.6569 16 14 16C12.3431 16 11 14.6569 11 13C11 11.3431 12.3431 10 14 10C15.6569 10 17 11.3431 17 13ZM6.2 20H17.8C18.9201 20 19.4802 20 19.908 19.782C20.2843 19.5903 20.5903 19.2843 20.782 18.908C21 18.4802 21 17.9201 21 16.8V9.2C21 8.07989 21 7.51984 20.782 7.09202C20.5903 6.71569 20.2843 6.40973 19.908 6.21799C19.4802 6 18.9201 6 17.8 6H6.2C5.0799 6 4.51984 6 4.09202 6.21799C3.71569 6.40973 3.40973 6.71569 3.21799 7.09202C3 7.51984 3 8.07989 3 9.2V16.8C3 17.9201 3 18.4802 3.21799 18.908C3.40973 19.2843 3.71569 19.5903 4.09202 19.782C4.51984 20 5.07989 20 6.2 20Z" stroke="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                   </svg>
               </button>
-              <div v-if="cameraActive" class="camera-container">
-            <video ref="cameraVideo" autoplay></video>
-            <button @click="capturePhoto" v-if="!photoTaken">Capture</button>
-            </div>
-    <img v-if="photoTaken" :src="previewImage" style="max-width: 100%; height: auto;">
-
               <div class="card-image">
                 <div class="img relative" v-for="(picture,index) in selectedImages" :key="index">
                     <svg @click="removeImage(index)"
@@ -301,6 +295,16 @@
                     style="height: 115px;width: 115px;">
                 </div>
               </div>
+               <!--video section-->
+               <div class="absolute bottom-2" 
+                  :class="cameraActive ?'block' : 'hidden'"  style="width: 64%;">
+                            <video ref="captureCamera"  class="w-full"
+                            @loadedmetadata="handleVideoLoaded"
+                            autoplay>
+                          </video>
+                  <svg @click="capturePhoto" viewBox="0 0 1024 1024" class="icon absolute bottom-2 right-2"  version="1.1" xmlns="http://www.w3.org/2000/svg"><path d="M845 166l-49-13 49-13 13-48 13 48 48 13-48 13-13 49-13-49zM892 219l-18-4 18-5 5-19 4 19 19 5-19 4-4 19-5-19z" fill="#FDCD60" /><path d="M79 711l-20-5 20-5 5-20 5 20 21 5-21 5-5 21-5-21zM148 862l-33-8 33-7 7-33 8 33 33 7-33 8-8 33-7-33z" fill="#FDCD60" /><path d="M143 169m-9 0a9 9 0 1 0 18 0 9 9 0 1 0-18 0Z" fill="#5546CB" /><path d="M889 854a25 25 0 1 1 25-25 25 25 0 0 1-25 25z m0-36a10 10 0 1 0 10 10 10 10 0 0 0-10-10z" fill="#5546CB" /><path d="M166 400v347a31 31 0 0 0 31 31h629a31 31 0 0 0 31-31V400z m362 358c-92 0-168-75-168-168s75-168 168-168 168 75 168 168-76 168-168 168zM858 380v-63a31 31 0 0 0-31-31H198a31 31 0 0 0-31 31v63z m-140-58h71v20h-71z" fill="#FDCD60" /><path d="M826 266h-40l-15-59H653l-15 59H198a51 51 0 0 0-51 51v430a51 51 0 0 0 51 51h628a51 51 0 0 0 51-51V317a51 51 0 0 0-51-51z m-157-39h86l10 37H660z m-471 59h628a31 31 0 0 1 31 31v63H166v-63a31 31 0 0 1 32-31z m628 492H198a31 31 0 0 1-31-31V400h691v347a31 31 0 0 1-32 31z" fill="#5546CB" /><path d="M528 443c-81 0-148 66-148 148s66 148 148 148 148-66 148-148-67-148-148-148z m0 264a116 116 0 1 1 116-117 116 116 0 0 1-116 116z" fill="#FFFFFF" /><path d="M528 423c-92 0-168 75-168 168s75 168 168 168 168-75 168-168-76-168-168-168z m0 315c-81 0-148-66-148-148s66-148 148-148 148 66 148 148-67 148-148 148z" fill="#5546CB" /><path d="M528 494a96 96 0 1 0 96 96 96 96 0 0 0-96-96z m43 81a18 18 0 1 1 18-18 18 18 0 0 1-18 18z" fill="#FF8859" /><path d="M528 474a116 116 0 1 0 116 116 116 116 0 0 0-116-116z m0 212a96 96 0 1 1 96-96 96 96 0 0 1-96 96z" fill="#5546CB" /><path d="M571 558m-18 0a18 18 0 1 0 36 0 18 18 0 1 0-36 0Z" fill="#FFFFFF" /><path d="M755 227h-86l-9 37h105l-10-37z" fill="#AFBCF3" /><path d="M718 322h71v20h-71z" fill="#5546CB" /></svg>
+                    <canvas ref="canvas" style="display: none;"></canvas>
+                </div>
             </div>
             <!-- Modal footer -->
             <div class="flex items-center p-6 space-x-2 border-t border-gray-200 rounded-b dark:border-gray-600">
@@ -381,35 +385,35 @@ export default {
       const removedImageURL =this.selectedImages.splice(index,1)[0];
       URL.revokeObjectURL(removedImageURL);
     },
-    openCamera() {
-      if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
-        navigator.mediaDevices.getUserMedia({ video: { facingMode: 'user' } })
-
-          .then((stream) => {
-            this.$refs.cameraVideo.srcObject = stream;
-            this.cameraActive = true;
-          })
-          .catch((error) => {
-            console.error('Error accessing camera:', error);
-          });
-      } else {
-        console.error('getUserMedia is not supported.');
-      }
-    },
-    capturePhoto() {
-      const cameraVideo = this.$refs.cameraVideo;
-      const canvas = document.createElement('canvas');
-      canvas.width = cameraVideo.videoWidth;
-      canvas.height = cameraVideo.videoHeight;
-      canvas.getContext('2d').drawImage(cameraVideo, 0, 0, canvas.width, canvas.height);
-
-      const capturedImageURL = canvas.toDataURL('image/png');
-      this.previewImage = capturedImageURL;
-      this.photoTaken = true;
-
-      cameraVideo.srcObject.getTracks().forEach(track => track.stop());
-      this.cameraActive = false;
-    },
+    async startCamera() {
+      this.takePhotoIsOpen=true
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: false });
+      this.$refs.captureCamera.srcObject = stream;
+    } catch (error) {
+      console.error('Error accessing camera:', error);
+    }
+  },
+  capturePhoto() {
+    const canvas = this.$refs.canvas;
+    const video = this.$refs.captureCamera;
+    
+    canvas.width = video.videoWidth;
+    canvas.height = video.videoHeight;
+    canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);
+    
+    const image_data_url = canvas.toDataURL('image/jpeg');
+    console.log(image_data_url);
+    this.selectedImages.push(image_data_url)
+     const stream = video.srcObject;
+      const tracks = stream.getTracks();
+      tracks.forEach(track => track.stop());
+      video.srcObject = null;
+      this.cameraActive=false
+  },
+  handleVideoLoaded() {
+      this.cameraActive = true;
+},
   },
 
   mounted() {
