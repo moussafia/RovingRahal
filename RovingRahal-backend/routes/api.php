@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\Blog\BlogController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -34,4 +35,10 @@ Route::group([
 ],function(){
     Route::post('reset-password',[AuthController::class , 'resetPassword']);
     Route::post('reset',[AuthController::class , 'reset']);
+});
+Route::group([
+    'middleware'=>'api',
+    'prefix'=>'Blog'
+],function(){
+    Route::post('createPost',[BlogController::class,'create']);
 });
