@@ -361,7 +361,6 @@ export default {
         },
         handleFileUpload(event) {
             const uploadedFile = event.target.files[0];
-            console.log(this.selectedImages);
             if (this.selectedImages.length < 4 && this.selectedImages) {
                 const imgURL = URL.createObjectURL(uploadedFile);
                 this.selectedImages.push(imgURL)
@@ -405,7 +404,6 @@ export default {
             canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);
 
             const image_data_url = canvas.toDataURL('image/jpeg');
-            console.log(image_data_url);
             this.selectedImages.push(image_data_url)
             const stream = video.srcObject;
             const tracks = stream.getTracks();
@@ -418,11 +416,13 @@ export default {
         },
         closeCamera() {
             const video = this.$refs.captureCamera;
+            if (video && video.srcObject) {
             const stream = video.srcObject;
-            const tracks = stream.getTracks();
+             const tracks = stream.getTracks();
             tracks.forEach(track => track.stop());
             video.srcObject = null;
             this.cameraActive = false
+            }
         },
         onClickOutVideo(referenceDiv, event){     
             const targetElement = event.target;
