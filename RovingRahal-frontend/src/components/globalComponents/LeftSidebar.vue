@@ -56,10 +56,10 @@ export default {
 
 <style>
 aside{
-    height: 100vh;
-    width: 370px;
-    /* 630 370 */
-    border-right: 1px solid var(--dark-color);
+    flex-basis: 25%;
+    position: sticky;
+    top: 15px;
+    align-self: flex-start;
 }
 aside > ul > li{
     border-radius: 35px;
