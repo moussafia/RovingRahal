@@ -1,6 +1,6 @@
 <template>
   <navbar></navbar>
-  <div class="flex">
+  <div class="flex justify-between ">
     <LeftSidebar></LeftSidebar>
     <Main></Main>
     <RightSideBar></RightSideBar>
