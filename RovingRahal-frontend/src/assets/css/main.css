@@ -7,6 +7,7 @@
 	--text-color: #fff;
 	--icons-text: #71767B;
 	--color-shadow: rgba(231, 233, 234, 1);
+	--container-sidebar: #16181C;
 }
 
 :root {
@@ -16,16 +17,13 @@
 	--text-color: #000000;
 	--icons-text: #000;
 	--color-shadow: rgba(113, 118, 123, 1);
+	--container-sidebar: #F7F9F9;
 }
 
 #app {
 	width: 100%;
 	max-width: 1400px;
 	margin: auto;
-	height: 100vh;
-	display: flex;
-
-	flex-direction: column;
 }
 
 * {
@@ -45,6 +43,10 @@ body {
 
 .brand-background {
 	background-color: var(--brand-color);
+}
+
+.brand-color {
+	color: var(--brand-color);
 }
 
 .bg-dark {
@@ -78,7 +80,13 @@ a{
 .links-dropdown:active{
 	background-color: var(--dark-color);
 }
+
 .brand-shadow{
 	box-shadow: 0 0 20px #ea3c3c86;
 }
 
+.picture-user-post {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+}
