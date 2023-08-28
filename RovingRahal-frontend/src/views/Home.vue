@@ -1,6 +1,6 @@
 <template>
   <navbar></navbar>
-  <div class="flex justify-between ">
+  <div class="flex gap-10 lg:gap-0 lg:justify-between">
     <LeftSidebar></LeftSidebar>
     <Main></Main>
     <RightSideBar></RightSideBar>
