@@ -1,5 +1,5 @@
 <template>
-    <div class="right-sidebar">
+    <div class="right-sidebar hidden lg:block">
         <!--B You might like -->
         <div class="container-sidebar rounded-xl py-4 px-5">
             <p class="text pb-2 font-extrabold text-sm md:text-base lg:text-2xl">You might like</p>
